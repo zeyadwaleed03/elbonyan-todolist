@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <template id="template">
+      <div class="task--cont" draggable="true">
+        <input type="text" class="task" readonly value="New task" />
+        <div class="button--cont">
+          <button class="edit--button">
+            <ion-icon name="create-outline"></ion-icon></button
+          ><button class="delete--button">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </template>
+    <div class="container">
+      <h1>Kalbonyan Board</h1>
+      <div class="cont--3cols">
+        <div class="small-cont">
+          <h2 class="title">Not Started</h2>
+          <div class="tasks-cont">
+            <div class="Started tasks"></div>
+            <button class="add--button">+Add</button>
+          </div>
+        </div>
+
+        <div class="small-cont">
+          <h2 class="title">In Progress</h2>
+          <div class="tasks-cont">
+            <div class="Progress tasks"></div>
+            <button class="add--button">+Add</button>
+          </div>
+        </div>
+
+        <div class="small-cont">
+          <h2 class="title">Completed</h2>
+          <div class="tasks-cont">
+            <div class="Completed tasks"></div>
+            <button class="add--button">+Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

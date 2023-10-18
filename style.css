@@ -1,0 +1,124 @@
+/*
+SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+font weights:
+line heights:
+default:1
+FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  color: #fff;
+  display: flex;
+  min-height: 100vh;
+  /* justify-content: center; */
+  align-items: center;
+  background-color: #12b886;
+  flex-direction: column;
+}
+.container {
+  flex-direction: column;
+  display: flex;
+  gap: 3.8rem;
+  margin-top: 8rem;
+}
+.cont--3cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  column-gap: 4.8rem;
+}
+.small-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 16rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+.add--button {
+  width: 100%;
+  display: block;
+  padding: 0.7rem 1rem;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #0ca678;
+  /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); */
+}
+.title {
+  font-size: 2rem;
+}
+
+.add--button:hover {
+  cursor: pointer;
+}
+.tasks {
+  width: 100%;
+
+  min-height: 2rem;
+}
+.task {
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem 0.6rem;
+  width: 100%;
+}
+.button--cont {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.1rem 0.5rem;
+}
+.task--cont {
+  margin-bottom: 1rem;
+  position: relative;
+}
+.edit--button {
+  padding: 0.2rem;
+  background-color: transparent;
+  border: none;
+  color: #228be6;
+
+  transition: all 0.3s ease-in-out;
+}
+.delete--button {
+  padding: 0.2rem;
+  background-color: transparent;
+  border: none;
+  color: #ff6b6b;
+  transition: all 0.3s ease-in-out;
+}
+.edit--button:hover,
+.delete--button:hover {
+  cursor: pointer;
+}
+.edit--button:hover {
+  color: #1971c2;
+  transform: scale(1.2);
+}
+.delete--button:hover {
+  color: #f03e3e;
+  transform: scale(1.2);
+}
+.droppable {
+  transition: all 0.3s ease-in-out;
+  transform: translateY(5px);
+  box-shadow: 0 -0.8rem 0.5rem rgba(0, 0, 0, 0.7);
+}
+input:focus {
+  outline: 0;
+}
