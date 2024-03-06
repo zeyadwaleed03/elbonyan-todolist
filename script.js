@@ -70,8 +70,6 @@ class TaskList {
   addingNewTask(id) {
     this.tasks.push(new Task(id, this.type));
     localStorage.setItem('tasks', JSON.stringify(taskListCont));
-    console.log(taskListCont);
-    // console.log(taskListCont);
   }
 
   connectDrop() {
@@ -89,7 +87,6 @@ class TaskList {
       }
     });
     taskListEl.parentElement.addEventListener('dragleave', (e) => {
-      // console.log(e);
       if (e.target.closest('.task--cont')) {
         e.target.closest('.task--cont').classList.remove('droppable');
       } else if (e.target.classList.contains('add--button')) {
@@ -103,7 +100,7 @@ class TaskList {
       if (this.tasks.find((el) => +el.taskId === id)) {
         return;
       }
-      // console.log(e);
+
       let inde;
 
       taskListCont[type1].forEach((item, index) => {
@@ -111,9 +108,8 @@ class TaskList {
           inde = index;
         }
       });
-      // console.log(inde);
+
       const taskmoved = taskListCont[type1].splice(+inde, 1);
-      // console.log(taskListCont);
 
       taskmoved[0].type = this.type;
       this.tasks.push(...taskmoved);
@@ -126,7 +122,6 @@ class TaskList {
       } else if (e.target.classList.contains('tasks')) {
         const childrenArr = [...e.target.children];
         if (childrenArr.length === 0) {
-          // console.log(childrenArr);
           taskListEl.appendChild(task);
           localStorage.setItem('tasks', JSON.stringify(taskListCont));
         }
@@ -162,10 +157,8 @@ class Task {
 
     const input = editButton.parentElement.previousElementSibling;
     input.addEventListener('input', (e) => {
-      console.log('changed');
       this.value = e.target.value;
       localStorage.setItem('tasks', JSON.stringify(taskListCont));
-      console.log(taskListCont);
     });
     editButton.addEventListener('click', (e) => {
       input.removeAttribute('readonly');
