@@ -1,5 +1,5 @@
 const taskListCont = JSON.parse(localStorage.getItem('tasks')) || {};
-console.log(JSON.parse(localStorage.getItem('tasks')));
+
 class App {
   static main() {
     const notStartedTaskList = new TaskList('Started');
@@ -172,7 +172,6 @@ class Task {
   connectDrag() {
     const task = document.getElementById(this.taskId);
     task.addEventListener('dragstart', (e) => {
-      console.log(this.type);
       e.dataTransfer.setData('text/plain', `${this.taskId} ${this.type}`);
 
       e.dataTransfer.effectAllowed = 'move';
