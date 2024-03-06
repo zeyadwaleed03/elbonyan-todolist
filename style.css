@@ -17,7 +17,7 @@ html {
 }
 body {
   color: #fff;
-
+  overflow-x: hidden;
   background-color: #12b886;
 }
 .container {
@@ -32,7 +32,7 @@ body {
 .grid--3--cols {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 6.4rem;
+  row-gap: 7rem;
 
   column-gap: 9.6rem;
 }
@@ -159,6 +159,9 @@ input:focus {
   }
   .grid--3--cols {
     grid-template-columns: 1fr;
+  }
+  .tasks .task--cont:first-child {
+    margin-top: 3.2rem;
   }
   .list-cont {
     width: 80%;
