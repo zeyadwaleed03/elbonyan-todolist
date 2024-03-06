@@ -1,5 +1,5 @@
-const taskListCont = {};
-
+const taskListCont = JSON.parse(localStorage.getItem('tasks')) || {};
+console.log(JSON.parse(localStorage.getItem('tasks')));
 class App {
   static main() {
     const notStartedTaskList = new TaskList('Started');
@@ -15,9 +15,35 @@ class TaskList {
     this.addButtonConnect();
     this.connectDrop();
     this.addingArrtoTaskListcont();
+    this.gettingDataFromLocalStorage();
+  }
+  gettingDataFromLocalStorage() {
+    if (!JSON.parse(localStorage.getItem('tasks'))) {
+      return;
+    }
+    this.tasks.forEach((taskItem) => {
+      const template = document.getElementById('template');
+
+      const task = document.importNode(template.content, true);
+
+      const taskEl = task.querySelector('.task--cont');
+
+      taskEl.id = taskItem.taskId;
+      taskEl.querySelector('input').value =
+        taskItem.value.length === 0 ? 'New task' : taskItem.value;
+      const taskListEl = document.querySelector(`.${this.type}`);
+      taskListEl.appendChild(taskEl);
+    });
+    this.tasks.forEach((task, index) => {
+      this.tasks[index] = new Task(task.taskId, task.type, task.value);
+    });
   }
   addingArrtoTaskListcont() {
-    taskListCont[this.type] = this.tasks;
+    if (!taskListCont[this.type]) {
+      taskListCont[this.type] = this.tasks;
+    } else {
+      this.tasks = taskListCont[this.type];
+    }
   }
   addButtonConnect() {
     const addButton = document.querySelector(
@@ -43,6 +69,8 @@ class TaskList {
   }
   addingNewTask(id) {
     this.tasks.push(new Task(id, this.type));
+    localStorage.setItem('tasks', JSON.stringify(taskListCont));
+    console.log(taskListCont);
     // console.log(taskListCont);
   }
 
@@ -77,6 +105,7 @@ class TaskList {
       }
       // console.log(e);
       let inde;
+
       taskListCont[type1].forEach((item, index) => {
         if (+item.taskId === id) {
           inde = index;
@@ -92,30 +121,36 @@ class TaskList {
       const task = document.getElementById(id);
       if (e.target.closest('.task--cont')) {
         e.target.closest('.task--cont').before(task);
+        localStorage.setItem('tasks', JSON.stringify(taskListCont));
         return;
       } else if (e.target.classList.contains('tasks')) {
         const childrenArr = [...e.target.children];
         if (childrenArr.length === 0) {
           // console.log(childrenArr);
           taskListEl.appendChild(task);
+          localStorage.setItem('tasks', JSON.stringify(taskListCont));
         }
         for (const child of childrenArr) {
           if (child.getBoundingClientRect().top > e.y) {
             child.before(task);
 
+            localStorage.setItem('tasks', JSON.stringify(taskListCont));
             return;
           }
         }
       } else {
         taskListEl.appendChild(task);
       }
+
+      localStorage.setItem('tasks', JSON.stringify(taskListCont));
     });
   }
 }
 class Task {
-  constructor(taskId, type) {
+  constructor(taskId, type, value) {
     this.type = type;
     this.taskId = taskId;
+    this.value = value || 'New task';
     this.connectEditButton();
     this.connectDeleteButton();
     this.connectDrag();
@@ -124,8 +159,15 @@ class Task {
     const editButton = document
       .getElementById(this.taskId)
       .querySelector('.edit--button');
+
+    const input = editButton.parentElement.previousElementSibling;
+    input.addEventListener('input', (e) => {
+      console.log('changed');
+      this.value = e.target.value;
+      localStorage.setItem('tasks', JSON.stringify(taskListCont));
+      console.log(taskListCont);
+    });
     editButton.addEventListener('click', (e) => {
-      const input = e.currentTarget.parentElement.previousElementSibling;
       input.removeAttribute('readonly');
       input.select();
 
@@ -137,6 +179,7 @@ class Task {
   connectDrag() {
     const task = document.getElementById(this.taskId);
     task.addEventListener('dragstart', (e) => {
+      console.log(this.type);
       e.dataTransfer.setData('text/plain', `${this.taskId} ${this.type}`);
 
       e.dataTransfer.effectAllowed = 'move';
@@ -169,6 +212,7 @@ class Task {
         }
       });
       taskListCont[this.type].splice(inde, 1);
+      localStorage.setItem('tasks', JSON.stringify(taskListCont));
     });
   }
 }
