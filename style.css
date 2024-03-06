@@ -32,9 +32,8 @@ body {
 .grid--3--cols {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 7rem;
 
-  column-gap: 9.6rem;
+  gap: 9.6rem;
 }
 .list-cont {
   display: flex;
@@ -72,7 +71,7 @@ h1 {
   flex-direction: column;
   gap: 2.4rem;
 
-  min-height: 4.8rem;
+  min-height: 3.2rem;
 }
 .tasks .task--cont:first-child {
   margin-top: 4.8rem;
@@ -160,13 +159,18 @@ input:focus {
   .grid--3--cols {
     grid-template-columns: 1fr;
   }
+  .container {
+    gap: 14.8rem;
+  }
   .tasks .task--cont:first-child {
-    margin-top: 3.2rem;
+    margin-top: 3.4rem;
+  }
+  .tasks {
+    min-height: 2.6rem;
   }
   .list-cont {
     width: 80%;
     justify-self: center;
-    gap: 3.4rem;
   }
   .container {
     gap: 12rem;
