@@ -24,21 +24,21 @@ body {
   flex-direction: column;
   display: flex;
   gap: 9.6rem;
-  margin: 0 auto;
+  margin: 10rem auto;
   padding: 0 4.8rem;
-  margin-top: 10rem;
+
   max-width: 120rem;
 }
 .grid--3--cols {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  row-gap: 6.4rem;
 
   column-gap: 9.6rem;
 }
 .list-cont {
   display: flex;
   flex-direction: column;
-  gap: 2.8rem;
 }
 
 h1 {
@@ -52,7 +52,8 @@ h1 {
   padding: 1rem 1rem;
   border: none;
   color: #fff;
-  margin-top: 3.2rem;
+
+  margin-top: 3rem;
   border-radius: 5px;
   font-size: 1.8rem;
   background-color: #0ca678;
@@ -60,7 +61,6 @@ h1 {
 .title {
   font-size: 2.8rem;
   font-weight: 600;
-  margin-bottom: 1.6rem;
 }
 
 .add--button:hover {
@@ -71,8 +71,13 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
-  min-height: 2rem;
+
+  min-height: 4.8rem;
 }
+.tasks .task--cont:first-child {
+  margin-top: 4.8rem;
+}
+
 .task {
   border-radius: 5px;
   border: none;
@@ -80,6 +85,7 @@ h1 {
   width: 100%;
   font-size: 1.6rem;
 }
+
 .button--cont {
   position: absolute;
   right: -3%;
@@ -153,12 +159,14 @@ input:focus {
   }
   .grid--3--cols {
     grid-template-columns: 1fr;
-    row-gap: 5.4rem;
   }
   .list-cont {
     width: 80%;
     justify-self: center;
     gap: 3.4rem;
+  }
+  .container {
+    gap: 12rem;
   }
   .add--button,
   .task {

@@ -95,6 +95,7 @@ class TaskList {
     });
 
     taskListEl.parentElement.addEventListener('drop', (e) => {
+      e.preventDefault();
       const id = +e.dataTransfer.getData('text/plain').split(' ')[0];
       const type1 = e.dataTransfer.getData('text/plain').split(' ')[1];
       if (this.tasks.find((el) => +el.taskId === id)) {
@@ -110,23 +111,38 @@ class TaskList {
       });
 
       const taskmoved = taskListCont[type1].splice(+inde, 1);
-
+      console.log(taskmoved);
       taskmoved[0].type = this.type;
-      this.tasks.push(...taskmoved);
 
       const task = document.getElementById(id);
       if (e.target.closest('.task--cont')) {
+        console.log('first');
+        const taskId = +e.target.closest('.task--cont').id;
+        const taskIndex = this.tasks.findIndex(
+          (task) => task.taskId === taskId
+        );
+        console.log(taskIndex);
+        this.tasks.splice(taskIndex, 0, ...taskmoved);
         e.target.closest('.task--cont').before(task);
+
         localStorage.setItem('tasks', JSON.stringify(taskListCont));
         return;
       } else if (e.target.classList.contains('tasks')) {
+        console.log('secound');
         const childrenArr = [...e.target.children];
         if (childrenArr.length === 0) {
           taskListEl.appendChild(task);
+          this.tasks.push(...taskmoved);
           localStorage.setItem('tasks', JSON.stringify(taskListCont));
         }
         for (const child of childrenArr) {
           if (child.getBoundingClientRect().top > e.y) {
+            const taskId = +child.id;
+            const taskIndex = this.tasks.findIndex(
+              (task) => task.taskId === taskId
+            );
+            console.log(taskIndex);
+            this.tasks.splice(taskIndex, 0, ...taskmoved);
             child.before(task);
 
             localStorage.setItem('tasks', JSON.stringify(taskListCont));
@@ -134,6 +150,8 @@ class TaskList {
           }
         }
       } else {
+        console.log('last');
+        this.tasks.push(...taskmoved);
         taskListEl.appendChild(task);
       }
 
