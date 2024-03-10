@@ -6,6 +6,15 @@ class App {
     const inProgressTaskList = new TaskList('Progress');
     const completedTaskList = new TaskList('Completed');
   }
+  static update(node) {
+    node.style.overflow = 'hidden';
+
+    node.style.height = 'auto';
+
+    let newHeight = node.scrollHeight;
+
+    node.style.height = newHeight + 'px';
+  }
 }
 class TaskList {
   tasks = [];
@@ -28,9 +37,18 @@ class TaskList {
 
       const taskEl = task.querySelector('.task--cont');
 
+      const taskTextArea = taskEl.querySelector('.task');
+      taskTextArea.addEventListener('input', () => {
+        App.update(taskTextArea);
+      });
       taskEl.id = taskItem.taskId;
-      taskEl.querySelector('input').value =
+      taskEl.querySelector('.task').value =
         taskItem.value.length === 0 ? 'New task' : taskItem.value;
+
+      setTimeout(() => {
+        App.update(taskTextArea);
+      }, 0);
+
       const taskListEl = document.querySelector(`.${this.type}`);
       taskListEl.appendChild(taskEl);
     });
@@ -60,6 +78,10 @@ class TaskList {
     const task = document.importNode(template.content, true);
 
     const taskEl = task.querySelector('.task--cont');
+    const taskTextArea = taskEl.querySelector('.task');
+    taskTextArea.addEventListener('input', () => {
+      App.update(taskTextArea);
+    });
     const id = Math.floor(Math.random() * 10000);
     taskEl.id = `${id}`;
     const taskListEl = document.querySelector(`.${this.type}`);
@@ -111,24 +133,22 @@ class TaskList {
       });
 
       const taskmoved = taskListCont[type1].splice(+inde, 1);
-      console.log(taskmoved);
+
       taskmoved[0].type = this.type;
 
       const task = document.getElementById(id);
       if (e.target.closest('.task--cont')) {
-        console.log('first');
         const taskId = +e.target.closest('.task--cont').id;
         const taskIndex = this.tasks.findIndex(
           (task) => task.taskId === taskId
         );
-        console.log(taskIndex);
+
         this.tasks.splice(taskIndex, 0, ...taskmoved);
         e.target.closest('.task--cont').before(task);
 
         localStorage.setItem('tasks', JSON.stringify(taskListCont));
         return;
       } else if (e.target.classList.contains('tasks')) {
-        console.log('secound');
         const childrenArr = [...e.target.children];
         if (childrenArr.length === 0) {
           taskListEl.appendChild(task);
@@ -141,7 +161,7 @@ class TaskList {
             const taskIndex = this.tasks.findIndex(
               (task) => task.taskId === taskId
             );
-            console.log(taskIndex);
+
             this.tasks.splice(taskIndex, 0, ...taskmoved);
             child.before(task);
 
@@ -150,7 +170,6 @@ class TaskList {
           }
         }
       } else {
-        console.log('last');
         this.tasks.push(...taskmoved);
         taskListEl.appendChild(task);
       }
@@ -180,6 +199,7 @@ class Task {
     });
     editButton.addEventListener('click', (e) => {
       input.removeAttribute('readonly');
+      input.focus();
       input.select();
 
       input.addEventListener('focusout', () => {
